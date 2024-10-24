@@ -33,23 +33,30 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const controllersRef = ref(database, 'Controllers');
-    onValue(controllersRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log('Fetched Controllers Data:', data);
-      if (data) {
-        const controllersList = Object.entries(data).map(([id, details]) => ({
-          id,
-          ...details,
-        }));
-        setControllers(controllersList);
-      } else {
-        setControllers([]);
-      }
-      setLoading(false); // Stop loading once data is fetched
-    });
-  }, []);
+useEffect(() => {
+  const controllersRef = ref(database, 'controllers');
+  console.log('Setting up listener for Controllers');
+  onValue(controllersRef, (snapshot) => {
+    console.log('Listener triggered');
+    const data = snapshot.val();
+    console.log('Fetched Controllers Data:', data);
+    if (data) {
+      const controllersList = Object.entries(data).map(([id, details]) => ({
+        id,
+        ...details,
+      }));
+      console.log('Parsed Controllers List:', controllersList);
+      setControllers(controllersList);
+    } else {
+      console.log('No data available');
+      setControllers([]);
+    }
+    setLoading(false);
+  });
+}, []);
+
+  
+  
   
   return (
     <div>
@@ -66,9 +73,9 @@ const App = () => {
               <p><strong>Frequency:</strong> {controller.frequency}</p>
               <p><strong>Temperature:</strong> {controller.temperature}</p>
               <p><strong>Timestamp:</strong> {controller.timestamp}</p>
-              <p><strong>User ID:</strong> {controller.userid}</p>
-              <p><strong>Voltage 1:</strong> {controller.voltage1}</p>
-              <p><strong>Voltage 2:</strong> {controller.voltage2}</p>
+              <p><strong>User ID:</strong> {controller.user_id}</p>
+              <p><strong>Voltage 1:</strong> {controller.voltage_1}</p>
+              <p><strong>Voltage 2:</strong> {controller.voltage_2}</p>
             </li>
           ))}
         </ul>

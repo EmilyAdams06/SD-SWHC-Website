@@ -1,6 +1,7 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get, child } from "firebase/database";
+import { getDatabase } from "firebase/database";
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 const firebaseConfig = {
@@ -18,4 +19,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-export { database };
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log('Signed in anonymously');
+  })
+  .catch((error) => {
+    console.error('Error signing in:', error);
+  });
+
+export { database, auth };
