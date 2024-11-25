@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <h1>Smart Water Heater Controller</h1>
+      <h1>Smart Water Heater</h1>
 
       <MapComponent />
     </div>
